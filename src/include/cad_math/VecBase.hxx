@@ -41,6 +41,30 @@ struct VecBase {
     }
 
     // ===== vector-vector operators =====
+    
+    static constexpr Derived elementWiseMin(const Derived& lhs, const Derived& rhs) noexcept {
+        Derived result{};
+        for (int i = 0; i < N; ++i) {
+            result[i] = std::min(lhs[i], rhs[i]);
+        }
+        return result;
+    }
+    
+    constexpr Derived elementWiseMin(const Derived& other) const noexcept {
+        return elementWiseMin(static_cast<const Derived&>(*this), other);
+    }
+    
+    static constexpr Derived elementWiseMax(const Derived& lhs, const Derived& rhs) noexcept {
+        Derived result{};
+        for (int i = 0; i < N; ++i) {
+            result[i] = std::max(lhs[i], rhs[i]);
+        }
+        return result;
+    }
+    
+    constexpr Derived elementWiseMax(const Derived& other) const noexcept {
+        return elementWiseMax(static_cast<const Derived&>(*this), other);
+    }
 
     friend constexpr bool operator==(const Derived& lhs, const Derived& rhs) noexcept {
         for (int i = 0; i < N; ++i) {
